@@ -56,7 +56,7 @@ const Container = styled.div`
   left: 0;
   right: 0;
   z-index: 1;
-  margin-left: 100px;
+  margin-left: 140px;
 `;
 const Menu = styled.div`
   display: flex;
