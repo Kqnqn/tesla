@@ -2,19 +2,24 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
+import { selectCars } from "../features/car/carSlice";
+import { useSelector } from "react-redux";
 
 function Header() {
   const [burgerStatus, setBurgerStatus] = useState(false);
+  const cars = useSelector(selectCars);
   return (
     <Container>
       <a>
         <img src="/images/logo.svg" alt="" />
       </a>
       <Menu>
-        <a href="#"> Model S</a>
-        <a href="#"> Model 3</a>
-        <a href="#"> Model X</a>
-        <a href="#"> Model Y</a>
+        {cars &&
+          cars.map((car, index) => (
+            <a key={index} href="#">
+              {car}
+            </a>
+          ))}
       </Menu>
 
       <RightMenu>
@@ -27,21 +32,12 @@ function Header() {
           <CustomClose onClick={() => setBurgerStatus(false)} />
         </CloseWraper>
 
-        <li>
-          <a href="#">Existing Inventory</a>
-        </li>
-        <li>
-          <a href="#">Used Inventory</a>
-        </li>
-        <li>
-          <a href="#">Trade in</a>
-        </li>
-        <li>
-          <a href="#">Cyber Truck</a>
-        </li>
-        <li>
-          <a href="#">Roadster</a>
-        </li>
+        {cars &&
+          cars.map((car, index) => (
+            <li key={index}>
+              <a href="#">{car}</a>
+            </li>
+          ))}
       </BurgerNav>
     </Container>
   );
@@ -60,20 +56,21 @@ const Container = styled.div`
   left: 0;
   right: 0;
   z-index: 1;
+  margin-left: 100px;
 `;
 const Menu = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   flex: 1;
+
   @media (max-width: 768px) {
     display: none;
   }
 
   a {
     font-weight: 600;
-    text-transform: uppercase;
-    padding: 0 10px;
+    padding: 0 20px;
     flex-wrap: nowrap;
   }
 `;
